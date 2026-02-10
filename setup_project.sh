@@ -5,7 +5,6 @@ read -p "Name your directory: attendance_tracker_" input
 
 directory=attendance_tracker_$input
 archive_folder=attendance_tracker_${input}_archive
-echo "$archive_folder"
 mkdir -p $directory
 
 cleanup() {
@@ -13,9 +12,9 @@ cleanup() {
 	echo "Script interrupted. Cleaning up..."
 
 	if [ -d "$directory" ]; then
-		tar -czf "${directory}_archive.tar.gz" "$directory"
+		tar -czf "${archive_folder}.tar.gz" "$directory"
 		rm -rf "$directory"
-		echo "Project archived as ${directory}_archive.tar.gz"
+		echo "Project archived as ${archive_folder}.tar.gz"
 	fi
 
 	echo "Incomplete setup removed. Exiting."
@@ -27,29 +26,43 @@ trap cleanup SIGINT
 mkdir -p $directory/Helpers
 mkdir -p $directory/reports
 
-cp attendance_checker.py $directory
-cp assets.csv $directory/Helpers/
-cp config.json $directory/Helpers/
-cp reports.log $directory/reports/
+required_files=("attendance_checker.py" "assets.csv" "config.json" "reports.log")
+
+for file in "${required_files[@]}"; do
+	if [ -f "$file" ]; then
+		if [ -d "$directory" ]; then
+			cp attendance_checker.py $directory
+			cp assets.csv $directory/Helpers/
+			cp config.json $directory/Helpers/
+			cp reports.log $directory/reports/
+		fi
+	else
+		echo "Error: Required file $file not found"
+	fi
+done
 
 read -p "Do you want to update attendance thresholds? (yes or no)" answer
 
-if [ $answer = "yes" ]; then
-	read -p "Enter warning threshold (default 75): " warning
-	read -p "Enter failure threshold (default 50): " failure
+case "${answer,,}" in
+	yes|y)
 
-	warning=${warning:-75}
-	failure=${failure:-50}
+		read -p "Enter warning threshold (default 75): " warning
+		read -p "Enter failure threshold (default 50): " failure
 
-	config_file=$directory/Helpers/config.json
+		warning=${warning:-75}
+		failure=${failure:-50}
 
-	sed -i "s/\"warning\"[[:space:]]*:[[:space:]]*[0-9]\+/\"warning\": $warning/" "$config_file"
-	sed -i "s/\"failure\"[[:space:]]*:[[:space:]]*[0-9]\+/\"failure\": $failure/" "$config_file"
+		config_file=$directory/Helpers/config.json
 
-	echo "Attendance thresholds updated in config.json"
-else
-	echo "Using default thresholds"
-fi
+		sed -i "s/\"warning\"[[:space:]]*:[[:space:]]*[0-9]\+/\"warning\": $warning/" "$config_file"
+		sed -i "s/\"failure\"[[:space:]]*:[[:space:]]*[0-9]\+/\"failure\": $failure/" "$config_file"
+
+		echo "Attendance thresholds updated in config.json"
+		;;
+	*)
+		echo "Using default thresholds"
+		;;
+esac
 
 
 if python3 --version > /dev/null 2>&1; then
@@ -63,4 +76,8 @@ if [ -d $directory/Helpers ] && [ -d $directory/reports ]; then
 	echo "Directory structure validated"
 fi
 
-echo "Project setup completed successfully!"
+if [ -d $directory/Helpers ] && [ -f $directory/attendance_checker.py ]; then
+	echo "Project setup completed successfully!"
+else
+	echo "Project setup not completed"
+fi
