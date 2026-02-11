@@ -16,14 +16,15 @@ The project demonstrates:
 ## Directory Structure
 After running the script, the following structure is created:
 
+```text
 attendance_tracker_<name>/
 ├── attendance_checker.py
 ├── Helpers/
-│ ├── assets.csv
-│ └── config.json
+│   ├── assets.csv
+│   └── config.json
 ├── reports/
-│ └── reports.log
-
+│   └── reports.log
+```
 
 If the script is interrupted, the directory is archived and safely cleaned up.
 
@@ -33,70 +34,70 @@ If the script is interrupted, the directory is archived and safely cleaned up.
 From the project root:
 
 ```bash
-chmod +x setup.sh
-./setup.sh
+chmod u+x setup_project.sh
+./setup_project.sh
+```
+### You will be prompted to:
 
-You will be prompted to:
+- Name your project directory
 
-Name your project directory
+- Optionally update attendance warning and failure thresholds
 
-Optionally update attendance warning and failure thresholds
+#### Watch walkthrough video here:
+[Walkthrough Video](https://youtu.be/7vqnazqmceQ?si=FyGvYWRTDuC0Wm1x "Walkthrough video showing how to setup and use the project")
 
-Features Implemented
-Environment Creation
+## Features Implemented
+**Environment Creation**
 
-Automatically creates all required directories
+* Automatically creates all required directories
 
-Copies required files into the correct locations
+* Copies required files into the correct locations
 
-Validates directory structure after setup
+* Validates directory structure after setup
 
-Configuration Management
+**Configuration Management**
 
-Uses sed to update values inside config.json
+* Uses sed to update values inside config.json
 
-Supports default values when user input is skipped
+* Supports default values when user input is skipped
 
-Ensures updates happen only when requested
+* Ensures updates happen only when requested
 
-Signal Handling
+**Signal Handling**
 
-Captures CTRL+C (SIGINT)
+* Captures CTRL+C (SIGINT)
 
-Archives the partially created project
+* Archives the partially created project
 
-Cleans up incomplete files before exiting
+* Cleans up incomplete files before exiting
 
-Dependency Checking
+**Dependency Checking**
 
-Detects whether Python 3 is installed
+* Detects whether Python 3 is installed
 
-Suppresses standard output using redirection
+* Suppresses standard output using redirection
 
-Version Control Workflow
+* Version Control Workflow
 
-This project uses a structured Git workflow:
+**Error Handling**
 
-main
-Contains only finalized, submission-ready files
+* Missing required files are detected and reported
 
-setup_branch
-Development of the automation and setup logic
+* Script exits gracefully on interruption
 
-documentation
-README writing and code commenting
+* Clear messages guide the user at each step
 
-All development work was done in feature branches and merged into main.
+### This project uses a structured Git workflow:
 
-Error Handling
+1. **main**: Contains only finalized, submission-ready files
 
-Missing required files are detected and reported
+2. **setup_branch**: Development of the automation and setup logic
 
-Script exits gracefully on interruption
+3. **documentation**: README writing and code commenting
 
-Clear messages guide the user at each step
+#### All development work was done in feature branches and merged into main.
 
-Notes
+## Notes
 
 This project was designed to be readable and beginner-friendly, with clear structure and logical flow.
 
