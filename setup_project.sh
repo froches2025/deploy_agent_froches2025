@@ -9,6 +9,11 @@ directory=attendance_tracker_$input
 archive_folder=attendance_tracker_${input}_archive
 mkdir -p $directory
 
+if ! mkdir -p "$directory"; then
+	echo "Error: Failed to create directory. Check permissions."
+	exit 1
+fi
+
 # This is the cleanup function for when the signal is interrupted
 cleanup() {
 	echo
@@ -65,6 +70,11 @@ while true; do
 			failure=${failure:-50}
 
 			config_file=$directory/Helpers/config.json
+      
+      if ! [[ "$warning" =~ ^[0-9]+$ ]] || ! [[ "$failure" =~ ^[0-9]+$ ]]; then
+			  echo "Error: Thresholds must be numeric values."
+			  exit 1
+		  fi
 
 			# Updates the config file with the selected warning and failure thresholds using sed
 			sed -i "s/\"warning\"[[:space:]]*:[[:space:]]*[0-9]\+/\"warning\": $warning/" "$config_file"
