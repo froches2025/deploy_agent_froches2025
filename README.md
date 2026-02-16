@@ -44,7 +44,7 @@ chmod u+x setup_project.sh
 - Optionally update attendance warning and failure thresholds
 
 #### Watch walkthrough video here:
-[Walkthrough Video](https://youtu.be/7vqnazqmceQ?si=FyGvYWRTDuC0Wm1x "Walkthrough video showing how to setup and use the project")
+[Walkthrough Video](loom.com/share/81cfaaa276414e03af02b6f5726b22dc "Walkthrough video showing how to setup and use the project")
 
 ## Features Implemented
 **Environment Creation**
