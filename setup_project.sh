@@ -7,6 +7,11 @@ directory=attendance_tracker_$input
 archive_folder=attendance_tracker_${input}_archive
 mkdir -p $directory
 
+if ! mkdir -p "$directory"; then
+	echo "Error: Failed to create directory. Check permissions."
+	exit 1
+fi
+
 cleanup() {
 	echo
 	echo "Script interrupted. Cleaning up..."
@@ -41,7 +46,7 @@ for file in "${required_files[@]}"; do
 	fi
 done
 
-read -p "Do you want to update attendance thresholds? (yes or no)" answer
+read -p "Do you want to update attendance thresholds? (yes or no): " answer
 
 case "${answer,,}" in
 	yes|y)
@@ -53,6 +58,11 @@ case "${answer,,}" in
 		failure=${failure:-50}
 
 		config_file=$directory/Helpers/config.json
+
+		if ! [[ "$warning" =~ ^[0-9]+$ ]] || ! [[ "$failure" =~ ^[0-9]+$ ]]; then
+			echo "Error: Thresholds must be numeric values."
+			exit 1
+		fi
 
 		sed -i "s/\"warning\"[[:space:]]*:[[:space:]]*[0-9]\+/\"warning\": $warning/" "$config_file"
 		sed -i "s/\"failure\"[[:space:]]*:[[:space:]]*[0-9]\+/\"failure\": $failure/" "$config_file"
