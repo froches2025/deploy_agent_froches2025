@@ -42,6 +42,12 @@ chmod u+x setup_project.sh
 - Name your project directory
 
 - Optionally update attendance warning and failure thresholds
+### Archive Trigger
+If at any point during the execution of this script, you press `Ctrl+C`, the current state of the project will be archived and the project, deleted.
+However, you can always unzip the file by running:
+```
+tar -xvzf filename.tar.gz
+```
 
 #### Watch walkthrough video here:
 [Walkthrough Video](https://www.loom.com/share/81cfaaa276414e03af02b6f5726b22dc "Walkthrough video showing how to setup and use the project")
@@ -99,5 +105,5 @@ chmod u+x setup_project.sh
 
 ## Notes
 
-This project was designed to be readable and beginner-friendly, with clear structure and logical flow.
+This project was designed to be readable and beginner-friendly, with a clear structure and logical flow.
 
