@@ -27,6 +27,8 @@ attendance_tracker_<name>/
 ```
 
 If the script is interrupted, the directory is archived and safely cleaned up.
+**Please DO NOT DELETE any of the required files from the root of the project.**
+**They are directly copied to the required locations during setup**
 
 ---
 
